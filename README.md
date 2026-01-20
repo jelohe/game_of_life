@@ -2,7 +2,7 @@
 
 Code Kata for practicing Elixir based on Conway's game of life.
 
-This Kata is about calculating the next generation of Conway’s game of life, given any starting position. See (Wikipedia)[http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life] for background.
+This Kata is about calculating the next generation of Conway’s game of life, given any starting position. See [Wikipedia](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for background.
 
 
 ### Problem Description
@@ -28,8 +28,8 @@ The input starting position could be a text file that looks like this:
 Generation 1:
 ```
 ........
-....*...
-...**...
+....o...
+...oo...
 ........
 ```
 
@@ -38,26 +38,7 @@ And the output could look like this:
 Generation 2:
 ```
 ........
-...**...
-...**...
+...oo...
+...oo...
 ........
 ```
-
-The input format is similar to that in KataMinesweeper, and is easily parsed in most languages.
-
-
-### Front End
-
-Make a beautiful IHM to render grid of any size in one page.
-
-
-### Suggested Test Cases
-
-Make sure you have enough coverage of edge cases - where there are births and deaths at the edge of the grid.
-
-
-### Comments from those who are working on this Kata
-
-(One possible solution in Java)[https://github.com/fabricejeannet/kataGameOfLife]
-
-(Elegant comonadic solution in Haskell)[http://blog.emillon.org/posts/2012-10-18-comonadic-life.html]
