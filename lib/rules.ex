@@ -2,7 +2,7 @@ defmodule Rules do
   @alive "o"
   @dead "."
 
-  def apply(grid, cell, pos) do
+  def apply_all(grid, cell, pos) do
     cell = survive_rule(grid, cell, pos)
     cell = overcrowding_rule(grid, cell, pos)
     cell = born_rule(grid, cell, pos)
@@ -17,10 +17,7 @@ defmodule Rules do
 
     if survive, do: @alive, else: @dead
   end
-
-  defp survive_rule(_, cell, _) when cell == @dead do
-    @dead
-  end
+  defp survive_rule(_, cell, _) when cell == @dead, do: @dead
 
   defp overcrowding_rule(grid, cell, {x, y}) when cell == @alive do
     dies =
@@ -30,10 +27,7 @@ defmodule Rules do
 
     if dies, do: @dead, else: @alive
   end
-
-  defp overcrowding_rule(_, cell, _) when cell == @dead do
-    @dead
-  end
+  defp overcrowding_rule(_, cell, _) when cell == @dead, do: @dead
 
   defp born_rule(grid, cell, {x, y}) when cell == @dead do
     borns = grid
@@ -42,10 +36,7 @@ defmodule Rules do
 
     if borns, do: @alive, else: @dead
   end
-
-  defp born_rule(_, cell, _) when cell == @alive do
-    @alive
-  end
+  defp born_rule(_, cell, _) when cell == @alive, do: @alive
 
   def count_alive(neighbours) do
     neighbours

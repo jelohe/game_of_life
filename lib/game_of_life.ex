@@ -1,43 +1,28 @@
 defmodule GameOfLife do
-  def iterate(world, times) do
-    next_iteration(world, times)
+  def normalize(world) when is_binary(world) do
+    world |> to_grid()
   end
+  def normalize(world) when is_list(world), do: world
 
-  defp next_iteration(world, i) when i > 0 do
-    draw(world)
-    next_iteration(next(world), i - 1)
-  end
-
-  defp next_iteration(_, i) when i == 0 do
-  end
-
-  def draw(world) when is_binary(world) do
-    world |> to_grid() |> draw()
-
+  def draw(world) do
     world
-  end
-
-  def draw(grid) when is_list(grid) do
-    grid
+    |> normalize()
     |> Enum.map(fn line -> Enum.join(line, "") end)
     |> Enum.each(fn line -> IO.puts(line) end)
 
     IO.puts(" ")
-    grid
   end
 
-  def next(world) when is_binary(world) do
-    world |> to_grid() |> next()
-  end
-
-  def next(grid) when is_list(grid) do
+  def next(world) do
+    grid = normalize(world)
     grid
+    |> normalize()
     |> Enum.with_index()
     |> Enum.map(fn {row, y} ->
       row
       |> Enum.with_index()
       |> Enum.map(fn {cell, x} ->
-        Rules.apply(grid, cell, {x, y})
+        Rules.apply_all(grid, cell, {x, y})
       end)
     end)
   end
@@ -47,8 +32,7 @@ defmodule GameOfLife do
     |> String.trim()
     |> String.split("\n")
     |> Enum.map(fn line ->
-      line
-      |> String.graphemes()
+      String.graphemes(line)
     end)
   end
 end
