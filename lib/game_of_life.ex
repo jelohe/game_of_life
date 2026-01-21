@@ -1,4 +1,16 @@
 defmodule GameOfLife do
+  def iterate(world, times) do
+    next_iteration(world, times)
+  end
+
+  defp next_iteration(world, i) when i > 0 do
+    draw(world)
+    next_iteration(next(world), i - 1)
+  end
+
+  defp next_iteration(_, i) when i == 0 do
+  end
+
   def draw(world) when is_binary(world) do
     world |> to_grid() |> draw()
 
@@ -10,7 +22,7 @@ defmodule GameOfLife do
     |> Enum.map(fn line -> Enum.join(line, "") end)
     |> Enum.each(fn line -> IO.puts(line) end)
 
-    IO.puts(" ") # padding to split generations
+    IO.puts(" ")
     grid
   end
 
@@ -25,7 +37,7 @@ defmodule GameOfLife do
       row
       |> Enum.with_index()
       |> Enum.map(fn {cell, x} ->
-        Rules.survive_rule(grid, cell, {x, y})
+        Rules.apply(grid, cell, {x, y})
       end)
     end)
   end

@@ -3,26 +3,26 @@ defmodule RulesTest do
 
   test "gets the neighbours of a cell" do
     grid = [
-      [".",".","o"],
-      [".","o","."],
-      [".",".","."],
+      [".", ".", "o"],
+      [".", "o", "."],
+      [".", ".", "."]
     ]
 
     assert Rules.get_neighbours(grid, {1, 1}) ==
-      [".",".",".",".",".","o",".","."]
-    
+             [".", ".", ".", ".", ".", "o", ".", "."]
+
     assert Rules.get_neighbours(grid, {0, 0}) ==
-      [".",".","o"]
+             [".", ".", "o"]
 
     assert Rules.get_neighbours(grid, {2, 2}) ==
-      ["o",".","."]
+             ["o", ".", "."]
   end
 
   test "counts neighbours alive" do
     grid = [
-      [".",".","o"],
-      [".","o","."],
-      ["o",".","o"],
+      [".", ".", "o"],
+      [".", "o", "."],
+      ["o", ".", "o"],
     ]
 
     neighbours = Rules.get_neighbours(grid, {1, 1})
