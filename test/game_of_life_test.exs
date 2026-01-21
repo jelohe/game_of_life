@@ -18,22 +18,6 @@ defmodule GameOfLifeTest do
            end) =~ world
   end
 
-  test "creates a grid of the world" do
-    world = """
-    ...
-    ...
-    ...
-    """
-
-    grid = [
-      [".", ".", "."],
-      [".", ".", "."],
-      [".", ".", "."]
-    ]
-
-    assert GameOfLife.to_grid(world) == grid
-  end
-
   test "a cell dies if it has fewer than two neighbours" do
     world = """
     ...

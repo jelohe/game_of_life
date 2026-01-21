@@ -3,40 +3,18 @@ defmodule Rules do
   @dead "."
 
   def apply_all(grid, cell, pos) do
-    cell = survive_rule(grid, cell, pos)
-    cell = overcrowding_rule(grid, cell, pos)
-    cell = born_rule(grid, cell, pos)
-    cell
+    alive_neighbours = grid
+                       |> get_neighbours(pos)
+                       |> count_alive()
+
+    next_cell(cell, alive_neighbours)
   end
 
-  defp survive_rule(grid, cell, {x, y}) when cell == @alive do
-    survive =
-      grid
-      |> get_neighbours({x, y})
-      |> count_alive() >= 2
-
-    if survive, do: @alive, else: @dead
-  end
-  defp survive_rule(_, cell, _) when cell == @dead, do: @dead
-
-  defp overcrowding_rule(grid, cell, {x, y}) when cell == @alive do
-    dies =
-      grid
-      |> get_neighbours({x, y})
-      |> count_alive() > 3
-
-    if dies, do: @dead, else: @alive
-  end
-  defp overcrowding_rule(_, cell, _) when cell == @dead, do: @dead
-
-  defp born_rule(grid, cell, {x, y}) when cell == @dead do
-    borns = grid
-    |> get_neighbours({x, y})
-    |> count_alive() == 3
-
-    if borns, do: @alive, else: @dead
-  end
-  defp born_rule(_, cell, _) when cell == @alive, do: @alive
+  defp next_cell(@alive, neighbours) when neighbours < 2, do: @dead
+  defp next_cell(@alive, neighbours) when neighbours in 2..3, do: @alive
+  defp next_cell(@alive, neighbours) when neighbours > 3, do: @dead
+  defp next_cell(@dead, 3), do: @alive
+  defp next_cell(@dead, _), do: @dead
 
   def count_alive(neighbours) do
     neighbours
